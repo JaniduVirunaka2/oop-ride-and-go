@@ -19,7 +19,7 @@ public class VehicleService {
 		try {
 			con = DBConnect.getConnection();
 			stmt = con.createStatement();
-			String sql = "SELECT * FROM vehicle"; // Make sure the table name is correct
+			String sql = "SELECT * FROM vehicle WHERE isAvailable = true"; // Make sure the table name is correct
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -31,9 +31,10 @@ public class VehicleService {
 				int milage = rs.getInt("milage");
 				String category = rs.getString("category");
 				String image = rs.getString("image");
+				boolean isAvailable = rs.getBoolean("isAvailable");
 
 				Vehicle vehicle = new Vehicle(vehicleID, vehicleBrand, vehicleModel, color, seatNo, milage, category,
-						image);
+						image, isAvailable);
 				vehicles.add(vehicle);
 			}
 		} catch (Exception e) {
@@ -64,7 +65,8 @@ public class VehicleService {
 		List<Vehicle> vehicles = new ArrayList<>();
 
 		try (Connection con = DBConnect.getConnection();
-				PreparedStatement stmt = con.prepareStatement("SELECT * FROM vehicle WHERE category = ?")) {
+				PreparedStatement stmt = con
+						.prepareStatement("SELECT * FROM vehicle WHERE category = ? AND isAvailable = true")) {
 
 			stmt.setString(1, category);
 			ResultSet rs = stmt.executeQuery();
@@ -79,12 +81,47 @@ public class VehicleService {
 				String cat = rs.getString("category");
 				String image = rs.getString("image");
 
-				Vehicle vehicle = new Vehicle(vehicleID, vehicleBrand, vehicleModel, color, seatNo, milage, cat, image);
+				boolean isAvailable = rs.getBoolean("isAvailable");
+
+				Vehicle vehicle = new Vehicle(vehicleID, vehicleBrand, vehicleModel, color, seatNo, milage, category,
+						image, isAvailable);
 				vehicles.add(vehicle);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return vehicles;
+	}
+
+	public static boolean rentVehicle(int vehicleId) {
+		boolean isAvailable = false;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = DBConnect.getConnection();
+			String sql = "UPDATE vehicle SET isAvailable = false WHERE vehicleID = ?"; // Adjust your SQL query as needed
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, vehicleId);
+
+			int rowsUpdated = pstmt.executeUpdate();
+			if (rowsUpdated > 0) {
+				isAvailable = true; // Rental was successful
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// Close resources
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return isAvailable;
 	}
 }

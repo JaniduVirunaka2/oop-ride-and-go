@@ -1,48 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Car Rental</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Car Rental</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/style.css" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 <body>
-    <!-- Header -->
-    <%@ include file="header.jsp" %>
+	<!-- Header -->
+	<%@ include file="header.jsp"%>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div>
-            <h1>DON'T RENT A CAR.<br>RENT THE CAR</h1>
-        </div>
-    </section>
+	<!-- Hero Section -->
+	<section class="hero">
+		<div>
+			<h1>
+				DON'T RENT A CAR.<br>RENT THE CAR
+			</h1>
+		</div>
+	</section>
 
-    <!-- Main Content -->
-    <div class="container" id="vehicles">
-        <h2>Available Vehicles</h2>
-        <div class="vehicles">
-            <!-- Iterate over the list of vehicles -->
-            <c:forEach var="vehicle" items="${vehicles}">
-                <div class="vehicle-card">
-                    <img src="${vehicle.image}" alt="${vehicle.vehicleBrand} ${vehicle.vehicleModel}" />
-                    <h3>${vehicle.vehicleBrand} ${vehicle.vehicleModel}</h3>
-                    <p>Color: ${vehicle.color}</p>
-                    <p>Seats: ${vehicle.seatNo}</p>
-                    <p>Milage: ${vehicle.milage} km/l</p>
-                    <p>Category: ${vehicle.category}</p>
-                    <button onclick="window.location.href='${pageContext.request.contextPath}/vehicleDetails?vehicleId=${vehicle.vehicleID}'">View details</button>
-                </div>
-            </c:forEach>
+	<!-- Main Content -->
+	<div class="container" id="vehicles">
+		<h2>Available Vehicles</h2>
+		<div class="vehicles">
+			<!-- Iterate over the list of vehicles -->
+			<c:forEach var="vehicle" items="${vehicles}">
+				<div class="vehicle-card">
+					<img src="${vehicle.image}"
+						alt="${vehicle.vehicleBrand} ${vehicle.vehicleModel}" />
+					<h3>${vehicle.vehicleBrand}${vehicle.vehicleModel}</h3>
+					<p>Color: ${vehicle.color}</p>
+					<p>Seats: ${vehicle.seatNo}</p>
+					<p>Milage: ${vehicle.milage} km/l</p>
+					<p>Category: ${vehicle.category}</p>
+					<!-- Rent button for each vehicle -->
+					<button
+						onclick="window.location.href='${pageContext.request.contextPath}/rentVehicle?vehicleId=${vehicle.vehicleID}'">Rent</button>
 
-            <!-- If no vehicles are found -->
-            <c:if test="${empty vehicles}">
-                <p>No vehicles available at the moment.</p>
-            </c:if>
-        </div>
-    </div>
+				</div>
+			</c:forEach>
 
-    <!-- Footer -->
-    <%@ include file="footer.jsp" %>
+			<!-- If no vehicles are found -->
+			<c:if test="${empty vehicles}">
+				<p>No vehicles available at the moment.</p>
+			</c:if>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<%@ include file="footer.jsp"%>
 </body>
 </html>

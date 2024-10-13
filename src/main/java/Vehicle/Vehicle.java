@@ -9,10 +9,11 @@ public class Vehicle {
     private int milage;
     private String category;
     private String image;
+    private boolean isAvailable; // New field added
 
     // Constructor
-    public Vehicle(int vehicleID, String vehicleBrand, String vehicleModel, String color, 
-                   int seatNo, int milage, String category, String image) {
+    public Vehicle(int vehicleID, String vehicleBrand, String vehicleModel, String color,
+                   int seatNo, int milage, String category, String image, boolean isAvailable) {
         this.vehicleID = vehicleID;
         this.vehicleBrand = vehicleBrand;
         this.vehicleModel = vehicleModel;
@@ -21,6 +22,7 @@ public class Vehicle {
         this.milage = milage;
         this.category = category;
         this.image = image;
+        this.isAvailable = isAvailable; // Initialize the new field
     }
 
     // Getters and Setters
@@ -88,6 +90,14 @@ public class Vehicle {
         this.image = image;
     }
 
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
     @Override
     public String toString() {
         return "Vehicle{" +
@@ -99,6 +109,7 @@ public class Vehicle {
                 ", milage=" + milage +
                 ", category='" + category + '\'' +
                 ", image='" + image + '\'' +
+                ", isAvailable=" + isAvailable +
                 '}';
     }
 }

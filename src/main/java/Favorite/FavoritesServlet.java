@@ -2,13 +2,12 @@ package Favorite;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Vehicle.Vehicle;
 
@@ -18,7 +17,14 @@ public class FavoritesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        int userId = getUserIdFromCookies(request.getCookies()); // Retrieve userId from cookies
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("userId"); // Retrieve userId from session
+
+        if (userId == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not logged in");
+            return; // Stop processing if userId is not available
+        }
+
         int vehicleId = Integer.parseInt(request.getParameter("vehicleId"));
 
         if ("add".equals(action)) {
@@ -26,7 +32,7 @@ public class FavoritesServlet extends HttpServlet {
             if (isAdded) {
                 response.sendRedirect(request.getContextPath() + "/jsp/vehicles.jsp"); // Redirect after adding
             } else {
-                // Handle error
+                // Handle error (e.g., vehicle already in favorites)
             }
         } else if ("remove".equals(action)) {
             boolean isRemoved = FavoriteService.removeFavorite(userId, vehicleId);
@@ -40,20 +46,16 @@ public class FavoritesServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        int userId = getUserIdFromCookies(request.getCookies()); // Retrieve userId from cookies
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("userId"); // Retrieve userId from session
+
+        if (userId == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not logged in");
+            return; // Stop processing if userId is not available
+        }
+
         List<Vehicle> favorites = FavoriteService.getFavorites(userId);
         request.setAttribute("favorites", favorites);
         request.getRequestDispatcher("/jsp/favorites.jsp").forward(request, response);
-    }
-
-    private int getUserIdFromCookies(Cookie[] cookies) {
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userId".equals(cookie.getName())) {
-                    return Integer.parseInt(cookie.getValue()); // Convert cookie value to int
-                }
-            }
-        }
-        return -1; // Return -1 if userId cookie is not found
     }
 }

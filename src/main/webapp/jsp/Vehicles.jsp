@@ -9,13 +9,6 @@
 
     <script>
         function addToFavorites(vehicleId) {
-            const userId = getUserIdFromCookies(); // Get userId from cookies
-
-            if (!userId) {
-                alert('Please log in to add favorites.');
-                return;
-            }
-
             const formData = new FormData();
             formData.append('action', 'add');
             formData.append('vehicleId', vehicleId);
@@ -30,17 +23,6 @@
                     alert('Failed to add to favorites');
                 }
             });
-        }
-
-        function getUserIdFromCookies() {
-            const cookies = document.cookie.split(';');
-            for (let cookie of cookies) {
-                const [name, value] = cookie.trim().split('=');
-                if (name === 'userId') {
-                    return value; // Return userId
-                }
-            }
-            return null; // Return null if userId is not found
         }
     </script>
 </head>

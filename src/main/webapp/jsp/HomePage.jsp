@@ -14,7 +14,7 @@
 
 
 <body>
-    <!-- Include the Header -->    
+    <!-- Header -->    
     <%@ include file = "header.jsp" %>
     
     
@@ -92,7 +92,7 @@
     </div>
 
 
-    <!-- Include the Footer -->
+    <!-- Footer -->
     <%@ include file = "footer.jsp" %>
 
 

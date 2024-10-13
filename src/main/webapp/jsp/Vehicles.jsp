@@ -22,43 +22,21 @@
 
     <!-- Main content -->
     <div class="container" id="vehicles">
-      <div class="vehicles">
-        <!-- car category -->
-        <div class="vehicle-card">
-          <img src="../images/car2.jpg" alt="Car" />
-
-          <h3>BMW</h3>
-          <p></p>
-          <button onclick="window.location.href='#'">View details</button>
-        </div>
-
-        <!-- Bike category -->
-        <div class="vehicle-card">
-          <img src="../images/car3.jpg" alt="Car2" />
-          <h3>Lotus</h3>
-          <p></p>
-          <button onclick="window.location.href='#"> View details</button>
-        </div>
-
-        <!-- Van category -->
-        <div class="vehicle-card">
-          <img src="../images/car4.jpg" alt="Car3" />
-
-          <h3>Mercedes benz</h3>
-          <p></p>
-          <button onclick="window.location.href='#'">View details</button>
-        </div>
-
-        <!-- jeep category -->
-        <div class="vehicle-card">
-          <img src="../images/car5.jpg" alt="Car4" />
-
-          <h3>Lambo</h3>
-          <p></p>
-          <button onclick="window.location.href='#'">View details</button>
-        </div>
-      </div>
-    </div>
+		<div class="vehicles">
+	        <!-- Iterate over the list of vehicles -->
+	        <c:forEach var="vehicle" items="${vehicles}">
+	            <div class="vehicle-card">
+	                <img src="${vehicle.image}" alt="${vehicle.vehicleBrand} ${vehicle.vehicleModel}" />
+	                <h3>${vehicle.vehicleBrand} ${vehicle.vehicleModel}</h3>
+	                <p>Color: ${vehicle.color}</p>
+	                <p>Seats: ${vehicle.seatNo}</p>
+	                <p>Milage: ${vehicle.milage} km/l</p>
+	                <p>Category: ${vehicle.category}</p>
+	                <button onclick="window.location.href='#'">View details</button>
+	            </div>
+	        </c:forEach>
+	    </div>
+	    </div>
 
 
     <!-- Footer -->

@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+/* Header start */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #cfdff0;
+}
+
+
+
+/* LOgin page start */
+
+/* Container for centering the login form */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Styling the login form */
+.login-form {
+    background-color: rgb(154, 183, 220);
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+/* Styling the form heading */
+.login-form h3 {
+    text-align: center;
+    font-size: 2.0rem;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.login-form p {
+    text-align: left;
+}
+
+/* Styling for the input fields */
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+/* Styling the Log In button */
+.login-form button {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: #2b323e;
+}
+
+/* Hover effect for the button */
+.login-form button:hover {
+    background-color: #0056b3;
+
+}
+
+/* login page end */

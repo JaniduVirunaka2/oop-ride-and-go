@@ -66,30 +66,7 @@ import Database.DBConnect;
 			return user;	
 		}
 	    
-	    public static boolean insertuser(String name, String email, String phone, String username, String password) {
-	    	
-	    	boolean isSuccess = false;
-	    	
-	    	try {
-	    		con = DBConnect.getConnection();
-	    		stmt = con.createStatement();
-	    	    String sql = "insert into user values (0,'"+name+"','"+email+"','"+phone+"','"+username+"','"+password+"')";
-	    		int rs = stmt.executeUpdate(sql);
-	    		
-	    		if(rs > 0) {
-	    			isSuccess = true;
-	    		} else {
-	    			isSuccess = false;
-	    		}
-	    		
-	    	}
-	    	catch (Exception e) {
-	    		e.printStackTrace();
-	    	}
-	 	
-	    	return isSuccess;
-	    }
-	    
+	
 	    public static boolean updateUser(String id, String name, String email, String phone, String username, String password) {
 	    	
 	    	try {
@@ -147,6 +124,48 @@ import Database.DBConnect;
 	    	return us;	
 	    }
 	    
+	    
+	    public static boolean isUsernameTaken(String username) {
+	        boolean isTaken = false;
+	        try {
+	            con = DBConnect.getConnection();
+	            stmt = con.createStatement();
+	            String sql = "SELECT * FROM user WHERE username='" + username + "'";
+	            rs = stmt.executeQuery(sql);
+
+	            if (rs.next()) {
+	                isTaken = true;
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return isTaken;
+	    }
+	    
+	    public static boolean insertuser(String name, String email, String phone, String username, String password) {
+	        boolean isSuccess = false;
+
+	        if (isUsernameTaken(username)) {
+	            return false; // Username is already taken
+	        }
+
+	        try {
+	            con = DBConnect.getConnection();
+	            stmt = con.createStatement();
+	            String sql = "INSERT INTO user (name, email, phone, username, password) VALUES ('" + name + "', '" + email + "', '" + phone + "', '" + username + "', '" + password + "')";
+	            int rs = stmt.executeUpdate(sql);
+
+	            if (rs > 0) {
+	                isSuccess = true;
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+
+	        return isSuccess;
+	    }
+
+
 	    
 	    public static boolean deleteUser(String id) {
 	    	

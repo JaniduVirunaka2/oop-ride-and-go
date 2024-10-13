@@ -1,25 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<link rel ="stylesheet" href = "static/css/bootstrap.min.css">
-<meta charset="ISO-8859-1">
-	<title>Login</title>
-	<style type="text/css">
-		body{
-			font-family: Hind SemiBold;
-		}
-	</style>
-	
-</head>
-<body>
-	<h1>Login Page</h1>
-	<form action="login" method="post">
-		User Name <input type="text" name="username" placeholder="Enter your username"><br><br>
-		Password <input type="password" name="password" placeholder="Enter your password"><br><br>
-		<input type="submit" name="submit" value="Login">
-	</form>
 
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css" />
+  </head>
+  <body>
+    <%@ include file="/jsp/header.jsp" %>
+
+
+    <div class="login-container">
+      <form class="login-form">
+        <h3>Login</h3>
+    
+        <label for="username">
+        <p>Username :</p>
+        </label>
+        <input type="text" name="username" placeholder="Enter your username"/>
+
+        <!-- Password input field -->
+        <label for="password"><p>Password:</p></label>
+        <input type="password" name="password" placeholder="Enter your password"/>
+
+        <!-- Log In button in the center of the form -->
+        <button type="submit">Login</button>
+      </form>
+    </div>
+
+    <!-- Footer Section -->
+    <%@ include file="/jsp/footer.jsp" %>
+  </body>
 </html>

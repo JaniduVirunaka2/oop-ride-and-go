@@ -1,0 +1,158 @@
+@charset "UTF-8";
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #2b323e;
+    border-bottom: 1px solid black;
+}
+
+/* Site logo */
+.logo {
+    flex-shrink: 0;
+}
+
+.logo img {
+    height: 150px;
+    width: 150px;
+    position: relative;
+    top: -40px;
+    margin-bottom: -90px;
+}
+
+/* Container for navigation links  */
+.nav-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Navigation links */
+.nav-links {
+    list-style-type: none;
+    display: flex;
+    margin: 0;     /*space around elements - top,right,bottom,left*/
+    padding: 0;    /*space around content and border - top,right,bottom,left*/
+
+}
+
+.nav-links li {
+    margin-right: 20px;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #a8bbce;
+    font-weight: bold;
+}
+
+a.active,
+a:hover {
+    background-color: rgba(128, 128, 128, 0);
+    transition: 0.5s;
+    padding: 5px;
+}
+
+
+
+/* /login and sign-up buttons/ */
+.auth-buttons {
+    display: flex;
+}
+
+.auth-buttons .login-btn,
+.auth-buttons .signup-btn {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth-buttons .login-btn {
+    background-color: #ddd;
+}
+
+.auth-buttons .signup-btn {
+    background-color: black;
+    color: white;
+}
+
+/* Header CSS End */
+
+
+
+
+
+
+/* Footer CSS Start */
+/* Footer Styling */
+.footer {
+    background-color: #2b323e;
+    padding: 20px ;
+    border-top: 1px solid #2b323e;
+    position: relative;
+    margin-top: 40px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Left section with social media links */
+.footer-left {
+    flex: 1;
+}
+
+/* Center section with additional links */
+.footer-center {
+    flex: 2;
+    text-align: center;
+}
+
+/* Right section with logo and text */
+.footer-right {
+    flex: 1;
+    text-align: right;
+}
+
+.social-links {
+    display: flex;
+    gap: 10px;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #a8bbce;
+    font-weight: bold;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: -10px;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+
+}
+
+.hr-color {
+    border: none;
+    background-color: black;
+    height: 2px;
+}
+
+/* Footer CSS End */

@@ -80,7 +80,6 @@ public class VehicleService {
 				int milage = rs.getInt("milage");
 				String cat = rs.getString("category");
 				String image = rs.getString("image");
-
 				boolean isAvailable = rs.getBoolean("isAvailable");
 
 				Vehicle vehicle = new Vehicle(vehicleID, vehicleBrand, vehicleModel, color, seatNo, milage, category,

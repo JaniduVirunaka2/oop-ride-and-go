@@ -21,10 +21,10 @@
 
 	<!-- Hero section -->
 	<section class="hero">
-		<div>
+		<div style="background-color: rgba(0, 0, 0, 0.5); color: white;">
 			<!--<img src="../UI/images/sitelogo.jpg" alt="sitelogo" /> -->
-			<h1>Ride&Go</h1>
-			<p>Choose from a wide selection of vehicles to rent</p>
+			<h1 >Ride&Go</h1>
+			<p >Choose from a wide selection of vehicles to rent</p>
 		</div>
 
 		<script>

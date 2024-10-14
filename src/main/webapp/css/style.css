@@ -13,7 +13,7 @@ body {
 }
 
 .hero {
-
+    color: white;
     position: relative;
     background-size: cover;
     background-position: center;
@@ -26,11 +26,13 @@ body {
 }
 
 .hero h1 {
+    color: white;
     font-size: 50px;
     margin: 0;
 }
 
 .hero p {
+    color: white;
     font-size: 20px;
 }
 

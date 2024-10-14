@@ -16,6 +16,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+    	<servlet-name>SignUpServlet</servlet-name>
+    	<servlet-class>com.user.SignUpServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>SignUpServlet</servlet-name>
+   	    <url-pattern>/signup</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>home</servlet-name>
 		<servlet-class>com.user.HomePage</servlet-class>
 	</servlet>
@@ -33,33 +42,9 @@
 		<url-pattern>/home</url-pattern>
 	</servlet-mapping>
 	
-    <servlet>
-    	<servlet-name>userinsert</servlet-name>
-    	<servlet-class>com.customer.CustomerInsert</servlet-class>
-    </servlet>
-    <servlet-mapping>
-    	<servlet-name>userinsert</servlet-name>
-    	<url-pattern>/insert</url-pattern>
-    </servlet-mapping>
 
-	<servlet>
-		<servlet-name>updateuser</servlet-name>
-		<servlet-class>com.customer.UpdateCustomerServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>updateuser</servlet-name>
-		<url-pattern>/update</url-pattern>
-	</servlet-mapping>
 	
-	<servlet>
-		<servlet-name>deleteuser</servlet-name>
-		<servlet-class>com.customer.DeleteCustomerServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>deleteuser</servlet-name>
-		<url-pattern>/delete</url-pattern>
-	</servlet-mapping>
-	
+   
 	
 	
 	

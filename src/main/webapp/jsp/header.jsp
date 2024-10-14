@@ -19,8 +19,8 @@
         <div class="nav-container">
             <!-- Navigation links -->
             <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Vehicles</a></li>
+                <li><a href="jsp/HomePage.jsp">Home</a></li>
+                <li><a href="${pageContext.request.contextPath}/vehicles?category=">Vehicles</a></li>
                 <li><a href="#">About Us</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>

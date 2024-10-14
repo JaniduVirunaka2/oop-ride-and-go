@@ -12,9 +12,10 @@ import java.io.PrintWriter;
 public class SignUpServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+    	   	
+    	
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
@@ -27,26 +28,28 @@ public class SignUpServlet extends HttpServlet {
 
         // Check if password and repassword match
         if (!password.equals(repassword)) {
-            out.println("<script type='text/javascript'>");
-            out.println("alert('Passwords do not match!');");
-            out.println("location='signup.jsp';"); // Redirect back to signup page
-            out.println("</script>");
+            request.setAttribute("errorMessage", "Passwords do not match!");
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
             return;
         }
 
-        // Call to UserDBUtil to register the user
+        // Check if the username is already taken
+        if (UserDBUtil.isUsernameTaken(username)) {
+            request.setAttribute("errorMessage", "Username is already taken!");
+            request.getRequestDispatcher("/jsp/signup.jsp").forward(request, response);
+            return;
+        }
+
+        // Attempt to register the user
         boolean isRegistered = UserDBUtil.insertUser(name, email, phone, username, password);
-        
+
         if (isRegistered) {
-            out.println("<script type='text/javascript'>");
-            out.println("alert('Registration successful! Please log in.');");
-            out.println("location='login.jsp';"); // Redirect to login page
-            out.println("</script>");
+            request.setAttribute("successMessage", "Registration successful! Please log in.");
+            request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
         } else {
-            out.println("<script type='text/javascript'>");
-            out.println("alert('Registration failed! Please try again.');");
-            out.println("location='signup.jsp';"); // Redirect back to signup page
-            out.println("</script>");
+            request.setAttribute("errorMessage", "Registration failed! Please try again.");
+            request.getRequestDispatcher("/jsp/signup.jsp").forward(request, response);
+
         }
     }
 }

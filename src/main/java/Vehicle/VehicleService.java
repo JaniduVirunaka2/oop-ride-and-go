@@ -19,11 +19,11 @@ public class VehicleService {
 		try {
 			con = DBConnect.getConnection();
 			stmt = con.createStatement();
-			String sql = "SELECT * FROM vehicle WHERE isAvailable = true"; // Make sure the table name is correct
+			String sql = "SELECT * FROM vehicle WHERE isAvailable = true"; 
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				int vehicleID = rs.getInt("vehicleID"); // Adjust field names as per your database
+				int vehicleID = rs.getInt("vehicleID"); 
 				String vehicleBrand = rs.getString("vehicleBrand");
 				String vehicleModel = rs.getString("vehicleModel");
 				String color = rs.getString("color");

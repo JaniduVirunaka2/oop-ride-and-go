@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,17 @@
 	  <div class="div-body">
 	    <div class="signup-container">
 	      <h2>Create Your Account</h2>
-	      <form action="signup" method="post">
+	      <%-- Display error message if present --%>
+   			 <c:if test="${not empty errorMessage}">
+        		<p style="color: red;">${errorMessage}</p>
+   			 </c:if>
+
+   		 <%-- Display success message if present --%>
+    		<c:if test="${not empty successMessage}">
+       			 <p style="color: green;">${successMessage}</p>
+   			 </c:if>
+   			 
+	      <form action="${pageContext.request.contextPath}/signup" method="post">
 	        <div class="form-group">
 	          <label for="name">Name:</label>
 	          <input type="text" id="name" name="name" placeholder="Enter your name" required/>

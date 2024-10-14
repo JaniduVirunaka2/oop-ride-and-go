@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 		} else {
 			out.println("<script type='text/javascript'>");
 			out.println("alert('Your username or password is incorrect');");
-			out.println("location='login.jsp';"); // Redirect back to login page
+			out.println("location='jsp/login.jsp';"); // Redirect back to login page
 			out.println("</script>");
 		}
 	}

@@ -31,11 +31,14 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute("userDetails", userDetails);
 
 			int userId = userDetails.get(0).getId(); // Assuming userDetails list is not empty
+			String username = userDetails.get(0).getUserName(); // Assuming userDetails list is not empty
 
 			// Set userId in session
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", userId);
-
+            session.setAttribute("username", username);
+			
+	
 			// Redirect to HomePage.jsp after successful login
 			response.sendRedirect(request.getContextPath() + "/jsp/HomePage.jsp");
 		} else {

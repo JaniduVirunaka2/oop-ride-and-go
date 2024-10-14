@@ -2,6 +2,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header_footer.css" />
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 </head>
 <body>
 
@@ -26,20 +27,33 @@
             </ul>
         </div>
 
-        <!-- Login and Sign Up buttons -->
+        <!-- Authentication buttons or Welcome message -->
         <div class="auth-buttons">
-            <button
-                onclick="window.location.href='${pageContext.request.contextPath}/jsp/login.jsp'"
-                class="login-btn"
-            >
-                Login
-            </button>
-            <button
-                onclick="window.location.href='${pageContext.request.contextPath}/jsp/signup.jsp'"
-                class="signup-btn"
-            >
-                Sign Up
-            </button>
+            <c:choose>
+                <c:when test="${not empty sessionScope.username}">
+                    <p style="color: #ffffff; padding-right: 20px; ">Welcome, ${sessionScope.username}!</p>
+                    <button
+                        onclick="window.location.href='${pageContext.request.contextPath}/logout'"
+                         class="login-btn"
+                    >
+                        Logout
+                    </button>
+                </c:when>
+                <c:otherwise>
+                    <button
+                        onclick="window.location.href='${pageContext.request.contextPath}/jsp/login.jsp'"
+                        class="login-btn"
+                    >
+                        Login
+                    </button>
+                    <button
+                        onclick="window.location.href='${pageContext.request.contextPath}/jsp/signup.jsp'"
+                        class="signup-btn"
+                    >
+                        Sign Up
+                    </button>
+                </c:otherwise>
+            </c:choose>
         </div>
     </nav>
 </header>

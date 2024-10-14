@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/vehicles")
 public class VehiclesServlet extends HttpServlet {
@@ -24,7 +25,7 @@ public class VehiclesServlet extends HttpServlet {
 			// Fetch all vehicles if no category parameter is given
 			vehicleList = VehicleService.getAllVehicles();
 		}
-
+		
 		// Set the vehicle list as a request attribute
 		request.setAttribute("vehicles", vehicleList);
 

@@ -14,48 +14,52 @@ import Vehicle.Vehicle;
 @WebServlet("/favorites")
 public class FavoritesServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        String action = request.getParameter("action");
-        HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute("userId"); // Retrieve userId from session
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String action = request.getParameter("action");
+		int vehicleId = Integer.parseInt(request.getParameter("vehicleId"));
 
-        if (userId == null) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not logged in");
-            return; // Stop processing if userId is not available
-        }
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("userId") == null) {
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not logged in");
+			return;
+		}
 
-        int vehicleId = Integer.parseInt(request.getParameter("vehicleId"));
+		int userId = (Integer) session.getAttribute("userId");
 
-        if ("add".equals(action)) {
-            boolean isAdded = FavoriteService.addFavorite(userId, vehicleId);
-            if (isAdded) {
-                response.sendRedirect(request.getContextPath() + "/jsp/vehicles.jsp"); // Redirect after adding
-            } else {
-                // Handle error (e.g., vehicle already in favorites)
-            }
-        } else if ("remove".equals(action)) {
-            boolean isRemoved = FavoriteService.removeFavorite(userId, vehicleId);
-            if (isRemoved) {
-                response.sendRedirect(request.getContextPath() + "/jsp/favorites.jsp"); // Redirect after removing
-            } else {
-                // Handle error
-            }
-        }
-    }
+		boolean result = false;
+		if ("add".equalsIgnoreCase(action)) {
+			result = addFavorite(userId, vehicleId);
+		} else if ("remove".equalsIgnoreCase(action)) {
+			result = removeFavorite(userId, vehicleId);
+		}
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute("userId"); // Retrieve userId from session
+		if (result) {
+			response.setStatus(HttpServletResponse.SC_OK);
+		} else {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Failed to update favorites");
+		}
+	}
 
-        if (userId == null) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not logged in");
-            return; // Stop processing if userId is not available
-        }
+	private boolean addFavorite(int userId, int vehicleId) {
+		return FavoriteService.addFavorite(userId, vehicleId);
+	}
 
-        List<Vehicle> favorites = FavoriteService.getFavorites(userId);
-        request.setAttribute("favorites", favorites);
-        request.getRequestDispatcher("/jsp/favorites.jsp").forward(request, response);
-    }
+	private boolean removeFavorite(int userId, int vehicleId) {
+		return FavoriteService.removeFavorite(userId, vehicleId);
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		if (session == null || session.getAttribute("userId") == null) {
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not logged in");
+			return;
+		}
+
+		int userId = (Integer) session.getAttribute("userId");
+		List<Vehicle> favorites = FavoriteService.getFavorites(userId);
+		request.setAttribute("favorites", favorites);
+		request.getRequestDispatcher("/jsp/favorites.jsp").forward(request, response);
+	}
 }

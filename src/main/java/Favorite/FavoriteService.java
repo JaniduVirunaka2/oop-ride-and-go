@@ -9,67 +9,38 @@ import Database.DBConnect;
 import Vehicle.Vehicle;
 
 public class FavoriteService {
-    
-    public static boolean addFavorite(int userId, int vehicleId) {
-        boolean isAdded = false;
-        Connection con = null;
-        PreparedStatement pstmt = null;
+	public static boolean addFavorite(int userId, int vehicleId) {
+		try (Connection con = DBConnect.getConnection();
+				PreparedStatement stmt = con
+						.prepareStatement("INSERT INTO user_favorites (user_id, vehicle_id) VALUES (?, ?)")) {
+			stmt.setInt(1, userId);
+			stmt.setInt(2, vehicleId);
+			int rowsAffected = stmt.executeUpdate();
+			return rowsAffected > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
-        try {
-            con = DBConnect.getConnection();
-            String sql = "INSERT INTO favorites (userId, vehicleId) VALUES (?, ?)";
-            pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, userId);
-            pstmt.setInt(2, vehicleId);
+	public static boolean removeFavorite(int userId, int vehicleId) {
+		try (Connection con = DBConnect.getConnection();
+				PreparedStatement stmt = con
+						.prepareStatement("DELETE FROM user_favorites WHERE user_id = ? AND vehicle_id = ?")) {
+			stmt.setInt(1, userId);
+			stmt.setInt(2, vehicleId);
+			int rowsAffected = stmt.executeUpdate();
+			return rowsAffected > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
-            int rowsInserted = pstmt.executeUpdate();
-            isAdded = (rowsInserted > 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (pstmt != null) pstmt.close();
-                if (con != null) con.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return isAdded;
-    }
-
-    public static boolean removeFavorite(int userId, int vehicleId) {
-        boolean isRemoved = false;
-        Connection con = null;
-        PreparedStatement pstmt = null;
-
-        try {
-            con = DBConnect.getConnection();
-            String sql = "DELETE FROM favorites WHERE userId = ? AND vehicleId = ?";
-            pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, userId);
-            pstmt.setInt(2, vehicleId);
-
-            int rowsDeleted = pstmt.executeUpdate();
-            isRemoved = (rowsDeleted > 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (pstmt != null) pstmt.close();
-                if (con != null) con.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return isRemoved;
-    }
-
-    public static List<Vehicle> getFavorites(int userId) {
-        List<Vehicle> favorites = new ArrayList<>();
-        // Implement logic to fetch favorite vehicles for the user
-        // Use JOIN to fetch vehicle details based on vehicleId from the favorites table
-        return favorites;
-    }
+	public static List<Vehicle> getFavorites(int userId) {
+		List<Vehicle> favorites = new ArrayList<>();
+		// Implement logic to fetch favorite vehicles for the user
+		// Use JOIN to fetch vehicle details based on vehicleId from the favorites table
+		return favorites;
+	}
 }

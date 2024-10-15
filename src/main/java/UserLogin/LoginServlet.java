@@ -7,9 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import Favorite.FavoriteService;
-
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -18,46 +15,36 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
-	    String action = request.getParameter("action");
-	    HttpSession session = request.getSession(false); // Get the existing session without creating a new one
-	    
-	    if (session != null) {
-	        Integer userId = (Integer) session.getAttribute("userId");
-	        if (userId == null) {
-	            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not logged in");
-	            return;
-	        }
+			throws ServletException, IOException {
 
-	        try {
-	            int vehicleId = Integer.parseInt(request.getParameter("vehicleId"));
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html");
 
-	            if ("add".equals(action)) {
-	                boolean isAdded = FavoriteService.addFavorite(userId, vehicleId);
-	                if (isAdded) {
-	                    response.setStatus(HttpServletResponse.SC_OK);
-	                } else {
-	                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Vehicle already in favorites");
-	                }
-	            } else if ("remove".equals(action)) {
-	                boolean isRemoved = FavoriteService.removeFavorite(userId, vehicleId);
-	                if (isRemoved) {
-	                    response.setStatus(HttpServletResponse.SC_OK);
-	                } else {
-	                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Failed to remove from favorites");
-	                }
-	            } else {
-	                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
-	            }
-	        } catch (NumberFormatException e) {
-	            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid vehicle ID");
-	        } catch (Exception e) {
-	            e.printStackTrace(); // Log the exception
-	            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An unexpected error occurred");
-	        }
-	    } else {
-	        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Session not found");
-	    }
+		String userName = request.getParameter("username");
+		String password = request.getParameter("password");
+		boolean isTrue;
+
+		isTrue = UserDBUtil.validate(userName.trim(), password.trim());
+
+		if (isTrue) {
+			List<User> userDetails = UserDBUtil.getUser(userName);
+			request.setAttribute("userDetails", userDetails);
+
+			int userId = userDetails.get(0).getId(); // Assuming userDetails list is not empty
+			String username = userDetails.get(0).getUserName(); // Assuming userDetails list is not empty
+
+			// Set userId in session
+			HttpSession session = request.getSession();
+			session.setAttribute("userId", userId);
+			session.setAttribute("username", username);
+
+			// Redirect to HomePage.jsp after successful login
+			response.sendRedirect(request.getContextPath() + "/jsp/HomePage.jsp");
+		} else {
+			out.println("<script type='text/javascript'>");
+			out.println("alert('Your username or password is incorrect');");
+			out.println("location='jsp/login.jsp';"); // Redirect back to login page
+			out.println("</script>");
+		}
 	}
-
 }

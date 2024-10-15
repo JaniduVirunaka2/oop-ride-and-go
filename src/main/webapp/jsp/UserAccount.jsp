@@ -1,85 +1,41 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
-	
-	<style type="text/css">
-		body{
-			font-family: Hind SemiBold;
-		}
-	
-		table, th, td {
-  			border: 1px solid black;
-		}
-	</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>User Account</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/user_acc.css" />
 </head>
 <body>
+	<%@ include file="/jsp/header.jsp"%>
+	<div class="container">
+		<h1>User Profile</h1>
+		<div class="account-info">
+			<div class="profile-pic"></div>
+			<div class="user-details">
+				<h2>Name: ${user.name}</h2>
+				<p>Username: ${user.userName}</p>
+				<p>Email: ${user.email}</p>
+			</div>
+		</div>
 
-	<table>
-	<c:forEach var="us" items="${usDetails}">
-	
-	<c:set var="id" value="${us.id}"/>
-	<c:set var="name" value="${us.name}"/>
-	<c:set var="email" value="${us.email}"/>
-	<c:set var="phone" value="${us.phone}"/>
-	<c:set var="username" value="${us.userName}"/>
-	<c:set var="password" value="${us.password}"/>
-	
-	<tr>
-		<td>Customer ID</td>
-		<td>${us.id}</td>
-	</tr>
-	<tr>
-		<td>Customer Name</td>
-		<td>${us.name}</td>
-	</tr>
-	<tr>
-		<td>Customer Email</td>
-		<td>${us.email}</td>
-	</tr>
-	<tr>
-		<td>Customer Phone</td>
-		<td>${us.phone}</td>
-	</tr>
-	<tr>
-		<td>Customer User Name</td>
-		<td>${us.userName}</td>
-	</tr>
+		<div class="contact-info">
+			<h3>Contact Details</h3>
+			<p>Phone: ${user.phone}</p>
+		</div>
 
-	</c:forEach>
-	</table>
-	
-	<c:url value="updatecustomer.jsp" var="usupdate">
-		<c:param name="id" value="${id}"/>
-		<c:param name="name" value="${name}"/>
-		<c:param name="email" value="${email}"/>
-		<c:param name="phone" value="${phone}"/>
-		<c:param name="uname" value="${username}"/>
-		<c:param name="pass" value="${password}"/>
-	</c:url>
-	
-	<a href="${usupdate}">
-	<input type="button" name="update" value="Update My Data">
-	</a>
-	
-	<br>
-	<c:url value="deletecustomer.jsp" var="usdelete">
-		<c:param name="id" value="${id}" />
-		<c:param name="name" value="${name}" />
-		<c:param name="email" value="${email}" />
-		<c:param name="uname" value="${username}" />
-		<c:param name="pass" value="${password}" />
-	</c:url>
-	<a href="${usdelete}">
-	<input type="button" name="delete" value="Delete My Account">
-	</a>
-	
-	
-	
-	
+		<div class="settings">
+			<h3>Account Settings</h3>
+			<button
+				onclick="window.location.href='${pageContext.request.contextPath}/logout'"
+				class="login-btn">Logout</button>
+			<form action="${pageContext.request.contextPath}/deleteUser"
+				method="post">
+				<button type="submit">Delete Profile</button>
+			</form>
+		</div>
+	</div>
+	<%@ include file="/jsp/footer.jsp"%>
 </body>
 </html>

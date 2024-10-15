@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+/* Basic styling for the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #cfdff0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for the main content */
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: rgb(154, 183, 220);
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Header styling */
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+/* Account info section */
+.account-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Profile picture styling */
+.profile-pic img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+/* User details styling */
+.user-details {
+    color: #555;
+}
+
+.user-details h2 {
+    margin: 0;
+    color: #333;
+}
+
+/* Contact info section */
+.contact-info {
+    margin-bottom: 20px;
+}
+
+.contact-info h3 {
+    color: #444;
+}
+
+/* Settings section styling */
+.settings {
+    text-align: center;
+}
+
+.settings button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Button hover effect */
+.settings button:hover {
+    background-color: #0056b3;
+}

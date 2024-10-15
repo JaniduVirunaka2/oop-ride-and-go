@@ -41,7 +41,7 @@ public class UserDBUtil {
 		try {
 			con = DBConnect.getConnection();
 			stmt = con.createStatement();
-			String sql = "SELECT * FROM user WHERE username='" + userName + "'";
+			String sql = "SELECT * FROM user WHERE Username='" + userName + "'";
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -108,7 +108,7 @@ public class UserDBUtil {
 
 	public static boolean isUsernameTaken(String username) {
 		boolean isTaken = false;
-		
+
 		try {
 			con = DBConnect.getConnection();
 			stmt = con.createStatement();
@@ -139,9 +139,7 @@ public class UserDBUtil {
 			pstmt.setString(5, password); // Consider hashing the password
 
 			int rowsAffected = pstmt.executeUpdate();
-			
 
-			System.out.println(" ------------ " + rowsAffected );
 			isSuccess = rowsAffected > 0; // Returns true if insertion is successful
 		} catch (SQLException e) {
 			e.printStackTrace(); // Log the exception for debugging
@@ -150,20 +148,33 @@ public class UserDBUtil {
 		return isSuccess;
 	}
 
-	public static boolean deleteUser(String id) {
-		int convId = Integer.parseInt(id);
+	public static boolean deleteUserByUsername(String username) {
+		boolean isSuccess = false;
 
 		try {
 			con = DBConnect.getConnection();
 			stmt = con.createStatement();
-			String sql = "DELETE FROM user WHERE id='" + convId + "'";
-			int r = stmt.executeUpdate(sql);
+			String sql = "DELETE FROM user WHERE username='" + username + "'";
+			int rowsAffected = stmt.executeUpdate(sql);
 
-			isSuccess = (r > 0);
+			if (rowsAffected > 0) {
+				isSuccess = true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			// Close the resources
+			try {
+				if (stmt != null)
+					stmt.close();
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return isSuccess;
 	}
+
 }
